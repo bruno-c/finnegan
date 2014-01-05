@@ -26,6 +26,10 @@
 			var num = $('#number').val();
 			$result.empty();
 
+			if (parseInt(num, 10) < 1) {
+				$result.text(num + ' is not an integer > 1');
+				return;
+			}
 
 			if (num.match(/^[0-9]+$/) === null) {
 				$result.text(num + ' is not a number');
