@@ -20,6 +20,12 @@ app.get('/primeFactors', function(req, res) {
       error: 'not a number'
     });
   }
+  else if (num > 1000000) {
+    return res.json({
+      number: req.query.number,
+      error: 'too big number (>1e6)'
+    });
+  }
   else {
     res.json({
       number: num,
