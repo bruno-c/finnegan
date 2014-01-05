@@ -18,11 +18,21 @@
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script>
 	$(function(){
+		var $result = $('#result');
+
 		$("#decomp").on('submit', function(e) {
 			e.preventDefault();
+
 			var num = $('#number').val();
+			$result.empty();
+
 			$.getJSON('/primeFactors?number=' + num, function(result) {
-				$('#result').text(num + ' = ' + result.decomposition.join(' x '));
+				if (result.error) {
+					$result.text(result.error);
+				}
+				else {
+					$result.text(num + ' = ' + result.decomposition.join(' x '));
+				}
 			});
 		});
 	});
