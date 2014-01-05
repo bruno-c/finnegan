@@ -1,0 +1,22 @@
+{
+  "name": "finnegan",
+  "version": "0.0.2",
+  "description": "yosethegame",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@heroku.com:finnegan.git"
+  },
+  "author": "",
+  "license": "mit",
+  "dependencies": {
+    "logfmt": "~0.18.1",
+    "express": "~3.4.7"
+  },
+  "engines": {
+    "node": "0.10.x"
+  }
+}
