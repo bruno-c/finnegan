@@ -9,7 +9,7 @@
 		<fieldset>
 			<p id="invitation">Enter a number. Push the button. Be very surprised when the prime factors show up</p>
 
-			<input id="number" type="number">
+			<input id="number">
 			<button id="go" type="submit">GO</button>
 		</fieldset>
 	</form>
@@ -25,6 +25,12 @@
 
 			var num = $('#number').val();
 			$result.empty();
+
+
+			if (num.match(/^[0-9]+$/) === null) {
+				$result.text(num + ' is not a number');
+				return;
+			}
 
 			$.getJSON('/primeFactors?number=' + num, function(result) {
 				if (result.error) {
