@@ -22,7 +22,7 @@
 			e.preventDefault();
 			var num = $('#number').val();
 			$.getJSON('/primeFactors?number=' + num, function(result) {
-				$('#result').text(JSON.stringify(result));
+				$('#result').text(num + ' = ' result.decomposition.join(','));
 			});
 		});
 	});
