@@ -12,26 +12,36 @@ app.get('/ping', function(req, res) {
 });
 
 app.get('/primeFactors', function(req, res) {
-  var num = parseInt(req.query.number, 10);
+  var nums = req.query.number,
+      response;
 
-  if (Number.isNaN(num)) {
-    return res.json({
-      number: req.query.number,
-      error: 'not a number'
-    });
-  }
-  else if (num > 1000000) {
-    return res.json({
-      number: req.query.number,
-      error: 'too big number (>1e6)'
-    });
-  }
-  else {
-    res.json({
-      number: num,
-      decomposition: require('./primes')(num)
-    });
-  }
+  if (!Array.isArray(nums)) nums = [nums];
+
+  response = nums.map(function(_num) {
+    var num = parseInt(_num, 10);
+
+    if (Number.isNaN(num)) {
+      return {
+        number: _num,
+        error: 'not a number'
+      };
+    }
+    else if (num > 1000000) {
+      return {
+        number: _num,
+        error: 'too big number (>1e6)'
+      };
+    }
+    else {
+      return {
+        number: _num,
+        decomposition: require('./primes')(num)
+      };
+    }
+  });
+
+  return response.length === 1 ? res.json(response[0])
+                               : res.json(response);
 });
 
 var port = process.env.PORT || 5000;
