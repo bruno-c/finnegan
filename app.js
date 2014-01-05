@@ -20,7 +20,7 @@ app.get('/primeFactors', function(req, res) {
   response = nums.map(function(_num) {
     var num = parseInt(_num, 10);
 
-    if (Number.isNaN(num)) {
+    if ((_num.match(/^[0-9]+$/) === null) || Number.isNaN(num)) {
       return {
         number: _num,
         error: 'not a number'
