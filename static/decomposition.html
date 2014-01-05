@@ -32,6 +32,10 @@
 				return num + ' is not a number';
 			}
 
+			if (result.error) {
+				return result.error;
+			}
+
 			return num + ' = ' + result.decomposition.join(' x ');
 		}
 
