@@ -5,7 +5,7 @@
 <body>
 	<h1 id="title">prime factors decomposition</h1>
 
-	<form>
+	<form id="decomp">
 		<fieldset>
 			<p id="invitation">Enter a number. Push the button. Be very surprised when the prime factors show up</p>
 
@@ -13,5 +13,20 @@
 			<button id="go" type="submit">GO</button>
 		</fieldset>
 	</form>
+	<div id="result">
+	</div>
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script>
+	$(function(){
+		$("#decomp").on('submit', function(e) {
+			e.preventDefault();
+			var num = $('#number').val();
+			$.getJSON('/primeFactors?number=' + num, function(result) {
+				$('#result').text(JSON.stringify(result));
+			});
+		});
+	});
+	</script
+
 </body>
 </html>
