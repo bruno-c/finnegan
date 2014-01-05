@@ -44,6 +44,10 @@ app.get('/primeFactors', function(req, res) {
                                : res.json(response);
 });
 
+app.get('/primeFactors/ui', function(req, res) {
+  res.sendfile('./static/decomposition.html');
+});
+
 var port = process.env.PORT || 5000;
 app.listen(port, function() {
   console.log('Listening on ' + port);
