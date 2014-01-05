@@ -15,7 +15,10 @@ app.get('/primeFactors', function(req, res) {
     return res.json([]);
   }
   else {
-    return res.json(require('/primes')(num));
+    res.json({
+      number: num,
+      decomposition: require('./primes')(num)
+    });
   }
 });
 
