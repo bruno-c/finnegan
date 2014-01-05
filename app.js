@@ -9,7 +9,18 @@ app.get('/ping', function(req, res) {
   res.json({ alive: true });
 });
 
+app.get('/primeFactors', function(req, res) {
+  var num = req.query.number || null;
+  if (null) {
+    return res.json([]);
+  }
+  else {
+    return res.json(require('/primes')(num));
+  }
+});
+
 var port = process.env.PORT || 5000;
 app.listen(port, function() {
   console.log('Listening on ' + port);
 });
+
