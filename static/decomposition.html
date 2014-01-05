@@ -15,38 +15,61 @@
 	</form>
 	<div id="result">
 	</div>
+	<ol id="results">
+	</ol>
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script>
 	$(function(){
-		var $result = $('#result');
+		var $result = $('#result'),
+			$results = $('#results');
+
+		function solve(num, result) {
+			if (parseInt(num, 10) < 1) {
+				return num + ' is not an integer > 1';
+			}
+
+			if (num.match(/^[0-9]+$/) === null) {
+				return num + ' is not a number';
+			}
+
+			return num + ' = ' + result.decomposition.join(' x ');
+		}
+
+		function listitem(result) {
+			return $('<li>' + result + '</li>');
+		}
+
+		function asParam(n) {
+			return 'number=' + n.trim();
+		}
+
+		function solver(result) {
+			return solve(result.number, result);
+		}
 
 		$("#decomp").on('submit', function(e) {
 			e.preventDefault();
 
-			var num = $('#number').val();
+			var num = $('#number').val(),
+			    params = num.split(',').map(asParam).join('&');
+
 			$result.empty();
+			$results.empty();
 
-			if (parseInt(num, 10) < 1) {
-				$result.text(num + ' is not an integer > 1');
-				return;
-			}
+			$.getJSON('/primeFactors?' + params, function(result) {
+				var multiple = Array.isArray(result),
+					results = multiple ? result : [result];
 
-			if (num.match(/^[0-9]+$/) === null) {
-				$result.text(num + ' is not a number');
-				return;
-			}
-
-			$.getJSON('/primeFactors?number=' + num, function(result) {
-				if (result.error) {
-					$result.text(result.error);
+				if (multiple) {
+					$results.append(results.map(solver).map(listitem));
 				}
 				else {
-					$result.text(num + ' = ' + result.decomposition.join(' x '));
+					$result.html(results.map(solver).join('<br>'));
 				}
 			});
 		});
 	});
-	</script
+	</script>
 
 </body>
 </html>
